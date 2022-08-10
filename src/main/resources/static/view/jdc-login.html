@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jdc-login</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        input,
+        button {
+            outline: none !important;
+        }
+
+        .jdc-text {
+            color:#f7f7f7;
+        }
+
+        @media (min-width: 768px) {
+            .navbar {
+                min-height: 40px
+            }
+
+            .navbar-nav > li > a {
+                font-size: 12px;
+                font-weight: 700;
+                padding-top: 11px;
+                padding-bottom: 11px
+            }
+
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 42px;
+                height: 42px
+            }
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navbar-nav > li:hover {
+            background: #db6eff;
+        }
+
+        .logo a {
+            display: block;
+            margin-left: -15px;
+            font-size: 0;
+            height: 65px;
+            background: url("img/logo.png") no-repeat;
+        }
+
+        .login {
+            margin-top: 130px;
+        }
+
+        .jdc-btn {
+            background-color: #ff6700;
+        }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="jdc-index.html" class="navbar-brand">
+                <span class="glyphicon glyphicon-home jdc-text"></span>
+                <span class="jdc-text">JDC购物商城</span>
+            </a>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#jdc-nav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="jdc-nav">
+
+            <ul class="navbar-nav nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="jdc-index.html" class="dropdown-toggle" >首页</a>
+                </li>
+                <li><a href="jdc-register.html" >没账号，去注册</a></li>
+
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+<div class="container login">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 class="text-center "><strong>login</strong></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="jdc-login-form">
+                <!-- username -->
+                <div class="form-group form-group-lg">
+                    <div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-user "></span>
+								</span>
+                        <input type="text" name="username" id="username" placeholder="请输入账号" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group form-group-lg">
+                    <div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-lock le-text"></span>
+								</span>
+                        <input type="password" name="password" id="password" placeholder="请输入密码" class="form-control"/>
+                    </div>
+                </div>
+
+                <!-- verifycode -->
+                <div class="form-group form-group-lg">
+                    <div class="input-group">
+                        <input type="text" name="requestCode" id="verifyCode" placeholder="请输入验证码" class="form-control"/>
+                        <div class="input-group-btn">
+                            <img src="/jdc/api/v1/anonymous/captcha" alt="" class="jdc-verify" id="jdc-verify">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- submit -->
+                <div class="form-group form-group-lg ">
+                    <button type="button" id="jdc-login-submit" class="btn  jdc-btn  btn-block btn-lg jdc-text">登 录</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="application/javascript">
+    $('#jdc-verify').click(function (){
+        this.src = '/jdc/api/v1/anonymous/captcha?r=' + Math.random();
+    });
+    $('#jdc-login-submit').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/jdc/api/v1/user/login',
+            data: {
+                username: $('#username').val(),
+                password: $('#password').val(),
+                requestCode: $('#verifyCode').val()
+            },
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.setItem('username', json.content.username);
+                    location.href = 'jdc-index.html';
+                } else {
+                    alert(json.message);
+                    location.href = 'jdc-login.html';
+                }
+            }
+        });
+    });
+
+</script>
+</html>

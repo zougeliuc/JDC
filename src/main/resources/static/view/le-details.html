@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/buttons.css"/>
+    <link rel="icon" href="img/le-icon.png"/>
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <title>商品详情</title>
+
+    <style>
+        input,
+        button {
+            outline: none !important;
+        }
+
+        .btn {
+            border-radius: 0;
+        }
+
+        .btn-default {
+            color: #fff;
+            background-color: #FEAE1B;
+        }
+
+        .le-text {
+            color: #c50e1b;
+        }
+
+        .le-bg {
+            background: #c50e1b;
+        }
+
+        .le-btn {
+            color: #fff;
+            background: #c50e1b;
+        }
+
+        .le-ad {
+            height: 40px;
+        }
+
+        .le-ad h4 {
+            margin: 0 auto;
+            line-height: 40px;
+            color: #fff;
+        }
+
+        /* 导航条高度调整 */
+        @media (min-width: 768px) {
+            .navbar {
+                min-height: 40px
+            }
+
+            .navbar-nav > li > a {
+                font-size: 12px;
+                font-weight: 700;
+                padding-top: 11px;
+                padding-bottom: 11px
+            }
+
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 42px;
+                height: 42px
+            }
+        }
+
+        /* 导航条 */
+        .navbar-default {
+            background: #e3e4e5;
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navbar-nav > li:hover {
+            background: #c50e1b;
+        }
+
+        .navbar-nav > li:hover > a {
+            color: #fff !important;
+        }
+
+        /* 红点 */
+        .le-red-point {
+            position: relative;
+        }
+
+        .le-red-point::after {
+            position: absolute;
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            top: 12px;
+            right: 6px;
+            padding: 4px;
+            border-radius: 50%;
+            background-color: #c50e1b;
+        }
+
+        .le-red-point:hover::after {
+            background-color: #fff;
+        }
+
+        /* 导航条按钮 */
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #c50e1b;
+        }
+
+        .le-goods-details {
+            margin-top: 60px;
+        }
+
+        .thumbnail {
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 0;
+        }
+
+        .thumbnail:hover {
+            border-color: #c50e1b;
+        }
+
+
+        .thumbnail img {
+            width: 100%;
+        }
+
+        .le-goods-tilte {
+            height: 50px;
+            line-height: 25px;
+            margin: 0 auto 20px auto;
+            font-size: 16px;
+            font-weight: 700;
+            overflow: hidden;
+        }
+
+        .le-goods-tilte-small {
+            font-size: 12px;
+        }
+
+        .jumbotron {
+            border-radius: 0 !important;
+            padding: 15px !important;
+
+        }
+
+        .jumbotron .list-inline {
+            margin: 0;
+        }
+
+        .jumbotron .list-inline li {
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        .jumbotron .list-inline li:first-child {
+            width: 70px;
+            color: #999;
+        }
+
+
+        .le-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c50e1b;
+        }
+
+        .le-icon span {
+            padding: 2px 4px;
+            line-height: 36px;
+            font-size: 12px;
+            border: 1px solid #e3e4e5;
+        }
+
+        .le-icon span.le-icon-red {
+            color: #C50E1B;
+            border-color: #C50E1B;
+        }
+
+        .le-icon span.le-icon-yellow {
+            color: #cfae68;
+            border-color: #cfae68;
+        }
+
+        .le-icon span.le-icon-primary {
+            color: #646fb0;
+            border-color: #646fb0;
+        }
+
+        .le-sales {
+            padding: 5px 10px;
+            border-left: 1px solid #cbcbcb;
+            font-size: 12px;
+        }
+
+        dl.dl-horizontal dt {
+            width: 60px;
+            color: #666;
+        }
+
+        dl.dl-horizontal dd {
+            margin-left: 100px;
+            font-size: 13px;
+        }
+
+        dl.dl-horizontal dd li a {
+            padding: 1px 2px;
+            color: #C50E1B;
+            border: 1px solid #C50E1B;
+        }
+
+        .le-top-ad {
+            margin-top: -10px;
+            height: 120px;
+            background-image: url(img/ad.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        .le-footter ul {
+            margin-bottom: 20px;
+        }
+
+        .le-footter h4 {
+            display: inline-block;
+            padding-right: 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #C50E1B;
+            border-bottom: 3px solid #C50E1B;
+        }
+
+        .le-footter li a {
+            font-size: 13px;
+            color: #333;
+        }
+
+        .le-footter li:hover a {
+            color: #c50e1b;
+        }
+
+        .le-bottom-ad {
+            margin: 50px auto;
+            height: 700px;
+            background-image: url("https://cdn.cnbj1.fds.api.mi-img.com/product-images/xiaomicivi1sokm6kd/5111.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .le-describe {
+            margin-top: 50px;
+            padding: 50px;
+
+        }
+
+        .le-describe h4 {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #C50E1B;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .le-describe p {
+            font-size: 13px;
+        }
+
+        .button-caution,
+        .button-caution-flat {
+            background: #C50E1B;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ad -->
+<div class="le-ad le-bg hidden-xs">
+    <div class="container">
+        <marquee behavior="scroll">
+            <h4>乐购平台 盛大开业 欢迎来购 专享7折优惠 惊喜不断。</h4>
+        </marquee>
+    </div>
+</div>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a href="" class="navbar-brand">
+                <span class="glyphicon glyphicon-home le-text"></span>
+                <span class="le-text">乐购商城</span>
+            </a>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#le-nav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="le-nav">
+            <ul class="navbar-nav nav hidden-xs">
+                <li><a href="">乐购 惊喜 盛大开业 欢迎来购</a></li>
+            </ul>
+
+            <ul class="navbar-nav nav navbar-right">
+                <li><a href="le-index.html">关于乐购</a></li>
+                <li><a href="">我的乐购</a></li>
+                <li><a href="jdc-cart.html">购物车</a></li>
+                <li class="le-red-point"><a href="le-favorite.html">收藏夹</a></li>
+                <li class="dropdown">
+                    <a href="le-login.html" class="dropdown-toggle" id="le-login">登录</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="le-personal.html">个人中心</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#bt-modal2">修改密码</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#bt-modal">退出</a></li>
+                    </ul>
+                </li>
+                <li><a href="le-regitser.html">注册</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="le-top-ad hidden-xs hidden-sm">
+    <button class="close">&times;</button>
+</div>
+
+<!-- 商品详情 -->
+
+<div class="container le-goods-details">
+
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img id="le-goods-url"
+                 src="https://img10.360buyimg.com/n7/jfs/t1/183864/21/21088/194098/61275df4E546b4a93/793da088a6861a82.jpg">
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h4 class="le-goods-title" id="le-goods-title">
+            <span id="le-goods-gid" class="hidden"></span>
+        </h4>
+        <p class="le-text le-goods-tilte-small">【会员专属】0元入会领专属优惠券,1元试用正装！ 【先储值后购物】至高享充值3000元送400元！</p>
+        <p class="le-text le-goods-tilte-small">【好评抽奖】评价抽奖享更多惊喜好礼！点击 <a href="">查看&gt;</a></p>
+
+        <div class="jumbotron">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10">
+                        <ul class="list-inline">
+                            <li>乐 购 价</li>
+                            <li><span class="le-price">￥<span id="le-goods-price"></span></span></li>
+                        </ul>
+                        <ul class="list-inline le-icon">
+                            <li>促 销</li>
+                            <li><span class="le-icon-red">满减</span></li>
+                            <li><span class="le-icon-red">换购</span></li>
+                            <li><span class="le-icon-yellow">PLUS限购</span></li>
+                            <li><span class="le-icon-primary">满额返券</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 hidden-xs hidden-sm hidden-md">
+                        <div class="le-sales">
+                            累计销量<br><a href="">100万+</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 配送 -->
+
+        <dl class="dl-horizontal hidden-xs hidden-sm">
+            <dt>配送至</dt>
+            <dd>
+                <ul class="list-inline">
+                    <li><a href="" style="border: none; color: #000;">四川成都 <b>有货</b></a></li>
+                </ul>
+            </dd>
+
+            <dt>支持</dt>
+            <dd>
+                <ul class="list-inline">
+                    <li><a href="">配送港澳台</a></li>
+                    <li><a href="">99元免运费</a></li>
+                    <li><a href="">破损包退换</a></li>
+                    <li><a href="">7天无理由</a></li>
+                    <li><a href="">正品保障</a></li>
+                </ul>
+            </dd>
+
+            <dt>乐购发货</dt>
+            <dd>
+                <ul class="list-inline">
+                    <li style="color: #646fb0;">现在购买即可享受售后服务保障 18:00 前下单 预计后天送达。</li>
+                </ul>
+            </dd>
+        </dl>
+
+        <!-- 按钮 -->
+        <div class="le-choose">
+            <button class="button button-glow button-highlight" id="le-favorite" type="button">收藏</button>
+            <button class="button button-glow button-caution" id="le-add-cart">加入购物车</button>
+        </div>
+    </div>
+
+</div>
+<div class="container-fluid le-describe hidden-xs hidden-sm">
+    <h4>
+        消费者须知</h4>
+    <p class="le-text">价格说明：</p>
+    <p><b>乐购价：</b>京东价为商品的销售价，是您最终决定是否购买商品的依据。</p>
+    <p><b>划线价：</b>商品展示的划横线价格为参考价，并非原价，该价格可能是品牌专柜标价、商品吊牌价或由品牌供应商提供的正品零售价（如厂商指导价、建议零售价等）或其他真实有依据的价格；由于地区、时间的差异性和市场行情波动，品牌专柜标价、商品吊牌价等可能会与您购物时展示的不一致，该价格仅供您参考。
+    </p>
+    <p><b>折扣：</b>如无特殊说明，折扣指销售商在原价、或划线价（如品牌专柜标价、商品吊牌价、厂商指导价、厂商建议零售价）等某一价格基础上计算出的优惠比例或优惠金额；如有疑问，您可在购买前联系销售商进行咨询。
+    </p>
+    <p><b>异常问题：</b>商品促销信息以商品详情页“促销”栏中的信息为准；商品的具体售价以订单结算页价格为准；如您发现活动商品售价或促销信息有异常，建议购买前先联系销售商咨询。</p>
+</div>
+
+<hr>
+
+<div class="container le-footter">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-unstyled">
+                <li>
+                    <h4>关于本站</h4>
+                </li>
+                <li><a href="">商务合作</a></li>
+                <li><a href="">广告合作</a></li>
+                <li><a href="">社会招聘</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-unstyled">
+                <li>
+                    <h4>本站友情站点</h4>
+                </li>
+                <li><a href="">京东方</a></li>
+                <li><a href="">淘天地</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-unstyled">
+                <li>
+                    <h4>关于</h4>
+                </li>
+                <li><a href="">合作加盟</a></li>
+                <li><a href="">个人运营</a></li>
+                <li><a href="">配送物流</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-unstyled">
+                <li>
+                    <h4>举报热线</h4>
+                </li>
+                <li><a href="">400-233-9527</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid le-copyright text-center">
+    <hr>
+    <h6>免责声明：本站仅供学习参考使用，数据来源 <a href="https://www.jd.com/">京东</a></h6>
+</div>
+
+
+div class="container">
+<div class="modal fade" id="bt-modal">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title le-text"><span id="user-showname">燕子</span>，<span>还会再见吗？</span></h4>
+            </div>
+            <div class="modal-body">
+                <p class="le-text">下次再见 一定要加满购物车。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger le-btn" id="le-user-logout">确定
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!--修改密码-->
+<div class="container">
+    <div class="modal fade" id="bt-modal2">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="le-text">修改个人密码</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form action="" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">旧密码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="oldPassword" name="oldPassword">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">新密码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="newPassword" name="newPassword">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-danger le-btn" id="le-user-update-password">确定
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    document.querySelector('.close').onclick = function () {
+        this.parentElement.style.display = 'none';
+    }
+
+    $(document).ready(function () {
+        //    处理商品
+        let url = location.href;
+        let gid = new URL(url).searchParams.get('gid');
+        if (gid == null || gid == '') {
+            location.href = 'le-index.html';
+        } else {
+            let username = new URL(url).searchParams.get('username');
+            if (username != null) {
+                sessionStorage.setItem('username', username);
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: `/legou/api/v1/anonymous/goods/${gid}`,
+                success: function (json) {
+                    if (json.success) {
+                        // 渲染数据
+                        $('#le-goods-title').html(json.content.goods.title);
+                        $('#le-goods-url').attr('src', json.content.goods.url);
+                        $('#le-goods-price').html(json.content.goods.price);
+                        $('#le-goods-gid').html(gid);
+
+                    } else {
+                        location.href = 'le-index.html';
+                    }
+                }
+            });
+        }
+        // 判断是否登录 已登录 显示昵称
+        let username = sessionStorage.getItem('username');
+        if (username) {
+            $.ajax({
+                type: 'GET',
+                url: '/legou/api/v1/user/userDetails',
+                data: {
+                    username: username
+                },
+                success: function (json) {
+                    if (json.success) {
+                        let showname = json.content.user.showname;
+                        $('#le-login').html(showname);
+                        $('#user-showname').html(showname);
+                        $('#le-login').attr('data-toggle', 'dropdown');
+                    }
+                }
+            });
+        }
+    });
+
+
+    $('#le-favorite').click(function () {
+        // 需判断用户是否登录
+
+        let username = sessionStorage.getItem('username');
+        if (username == null) {
+            alert('请先完成登录...');
+        } else {
+
+            $.ajax({
+                type: 'GET',
+                url: '/legou/api/v1/goods/favoriteGoods',
+                data: {
+                    username: username,
+                    gid: parseInt((new URL(location.href).searchParams.get('gid'))),
+                },
+                success: function (json) {
+                    if (json.content.exists) {
+                        alert('已收藏本商品');
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/legou/api/v1/goods/addFavorite',
+                            data: {
+                                username: username,
+                                gid: parseInt((new URL(location.href).searchParams.get('gid'))),
+                                price: $('#le-goods-price').html()
+                            },
+                            success: function (json) {
+                                if (json.success) {
+                                    alert('收藏成功');
+                                } else {
+                                    alert('收藏失败');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+    // 退出
+    $('#le-user-logout').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/legou/api/v1/user/logout',
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.removeItem('username');
+                    location.href = 'le-index.html';
+                }
+            }
+        });
+    });
+
+    $('#le-user-update-password').click(function () {
+        let username = sessionStorage.getItem('username');
+        $.ajax({
+            type: 'POST',
+            url: '/legou/api/v1/user/updatePassword',
+            data: {
+                username: username,
+                oldPassword: $('#oldPassword').val(),
+                newPassword: $('#newPassword').val()
+            },
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.removeItem('username');
+                    $(document).reload();
+                } else {
+                    alert('输入错误，请重新输入...');
+                }
+            }
+        });
+    });
+
+
+    $('#le-add-cart').click(function () {
+        let username = sessionStorage.getItem('username');
+        if (username == null) {
+            alert('请完成登录');
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/legou/api/v1/cart/add',
+                data: {
+                    username: username,
+                    gid: new URL(location.href).searchParams.get('gid')
+                },
+                success: function (json) {
+                    if (json.success) {
+                        alert('已加入购物车');
+                    }
+                }
+            });
+        }
+    });
+
+</script>
+</html>

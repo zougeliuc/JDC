@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <title>update-pwd-to-login</title>
+
+    <style type="text/css">
+        .lead {
+            margin-top: 200px;
+            padding: 20px;
+            text-align: center;
+            color: #C50E1B;
+        }
+    </style>
+
+</head>
+<body>
+<p class="lead">亲，密码修改成功，请重新登录 系统将在 <span id="jdc-countdown" style="color: #000">5</span> 秒后跳转到登录页面...</p>
+</body>
+
+<script type="application/javascript">
+
+    window.onload = function () {
+        let seconds = parseInt(document.querySelector('#jdc-countdown').innerHTML);
+        setInterval(function () {
+            if (seconds != 0) {
+                document.querySelector('#jdc-countdown').innerHTML = (--seconds);
+            } else {
+                location.href = 'jdc-login.html';
+            }
+        }, 1000);
+    }
+
+</script>
+
+</html>

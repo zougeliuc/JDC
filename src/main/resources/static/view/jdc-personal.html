@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <title>jdc-register</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        input,
+        button {
+            outline: none !important;
+        }
+
+        .jdc-time {
+            height: 35px;
+            background-color: #5bc0de;
+
+        }
+
+        .jdc-text {
+            color: #f7f7f7;
+        }
+
+        @media (min-width: 768px) {
+            .navbar {
+                min-height: 40px
+            }
+
+            .navbar-nav > li > a {
+                font-size: 12px;
+                font-weight: 700;
+                padding-top: 11px;
+                padding-bottom: 11px
+            }
+
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 42px;
+                height: 42px
+            }
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navbar-nav > li:hover {
+            background: #5bc0de;
+        }
+    </style>
+</head>
+<body>
+<div class="jdc-time">
+    <div class="container">
+        <marquee behavior="scroll">
+            <h4 class="jdc-text"><i>今 天 是 您 来 到 JDC商城 的 第 <b id="jdc-days"></b> 天 ，JDC 欢 迎 您 的 到 来</i></h4>
+        </marquee>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="jdc-index.html" class="navbar-brand">
+                <span class="glyphicon glyphicon-home jdc-text"></span>
+                <span class="jdc-text">JDC购物商城</span>
+            </a>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#jdc-nav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="jdc-nav">
+
+            <ul class="navbar-nav nav navbar-right">
+
+                <li><a href="jdc-index.html">首页</a></li>
+                <li><a href="jdc-form.html">我的订单</a></li>
+                <li><a href="jdc-cart.html">购物车</a></li>
+                <li><a href="jdc-favorite.html">收藏夹</a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+<div class="container jdc-person-form">
+    <form action="" method="" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-2 control-label" disabled="">账号：</label>
+            <div class="col-md-6">
+                <input type="text" name="username" id="username" value="admin" class="form-control" disabled/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">昵称：</label>
+            <div class="col-md-6">
+                <input type="text" name="showname" id="showname" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">性别：</label>
+            <div class="col-md-1">
+                <select name="sex" id="sex" class="form-control">
+                    <option value=""></option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">电话：</label>
+            <div class="col-md-6">
+                <input type="text" name="phone" id="phone" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">邮箱：</label>
+            <div class="col-md-6">
+                <input type="text" name="email" id="email" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">收货地址：</label>
+            <div class="col-md-6">
+                <input type="text" name="address" id="address" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label ">个人介绍：</label>
+            <div class="col-md-6">
+                <textarea class="form-control" style="resize: none;" id="info" name="info" value=""></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+                <button type="button" id="jdc-save-userinfo" class="btn btn-block btn-info">保 存</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+</body>
+<script type="application/javascript">
+    $(document).ready(function () {
+        let username = sessionStorage.getItem('username');
+        if (username) {
+            $.ajax({
+                type: 'get',
+                url: '/jdc/api/v1/user/userDetails',
+                data: {
+                    username: username
+                },
+                success: function (json) {
+                    $('#username').val(json.content.user.username);
+                    $('#showname').val(json.content.user.showname);
+                    $('#sex').val(json.content.user.sex);
+                    $('#phone').val(json.content.user.phone);
+                    $('#email').val(json.content.user.email);
+                    $('#address').val(json.content.user.address);
+                    $('#info').val(json.content.user.info);
+                    $('#jdc-days').html(json.content.regdays);
+                }
+            });
+        } else {
+            location.href = 'le-index.html';
+        }
+    });
+
+    $('#jdc-save-userinfo').click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/jdc/api/v1/user/updateUserInfo',
+            data: {
+                username: $('#username').val(),
+                showname: $('#showname').val(),
+                sex:$('#sex').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val(),
+                address: $('#address').val(),
+                info:$('#info').val()
+            },
+            success: function (json) {
+                if (json.success) {
+                    alert('保存成功');
+                    $(document).reload();
+                }
+            }
+        });
+    });
+</script>
+</html>

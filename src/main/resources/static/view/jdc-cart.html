@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/buttons.css"/>
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <title>乐购物车</title>
+
+    <style type="text/css">
+        input,
+        button {
+            outline: none !important;
+        }
+
+        .jdc-text {
+            color:#f7f7f7;
+        }
+
+
+        @media (min-width: 768px) {
+            .navbar {
+                min-height: 40px
+            }
+
+            .navbar-nav > li > a {
+                font-size: 12px;
+                font-weight: 700;
+                padding-top: 11px;
+                padding-bottom: 11px
+            }
+
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 42px;
+                height: 42px
+            }
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navbar-nav > li:hover {
+            background: #db6eff;
+        }
+
+
+        .jdc-cart-list {
+            margin-top: 50px;
+        }
+
+        .jdc-cart-list .row {
+            border-bottom: 1px solid #e3e4e5;
+        }
+
+        .jdc-cart-list .jdc-goods-img,
+        .jdc-cart-list .jdc-goods-title,
+        .jdc-cart-list .jdc-goods-shop,
+        .jdc-cart-list .jdc-goods-price,
+        .jdc-cart-list .jdc-goods-cnt {
+            margin: 0;
+            padding: 0;
+            height: 100px;
+            line-height: 100px;
+        }
+
+        .jdc-cart-list .jdc-goods-img {
+            padding: 5px;
+        }
+
+        .jdc-goods-title {
+            text-indent: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #000;
+        }
+
+        .jdc-goods-shop {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .jdc-goods-price {
+            font-size: 16px;
+            color: #c50e1b;
+        }
+
+        .jdc-goods-price::before {
+            content: '￥';
+        }
+
+        .jdc-goods-price i {
+            font-style: normal;
+        }
+
+        .jdc-goods-cnt {
+            font-size: 16px;
+        }
+
+        .button-caution,
+        .button-caution-flat {
+            background-color: #C50E1B;
+            border-color: #C50E1B;
+        }
+
+        @media (max-width: 992px) {
+
+            .jdc-cart-list .jdc-goods-price,
+            .jdc-cart-list .jdc-goods-cnt {
+                line-height: 16px;
+            }
+        }
+        .cut-off {
+            margin: 60px auto 30px;
+            height: 1px;
+            background-color: #333;
+        }
+        .logo a {
+            display: block;
+            margin-left: -15px;
+            font-size: 0;
+            height: 65px;
+            background: url("img/logo.png") no-repeat;
+        }
+
+        .footer-list ul>li {
+            margin-top: 15px;
+        }
+        .jdc-QR-code img{
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="jdc-index.html" class="navbar-brand">
+                <span class="glyphicon glyphicon-home jdc-text"></span>
+                <span class="jdc-text">JDC购物商城</span>
+            </a>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#jdc-nav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="jdc-nav">
+
+            <ul class="navbar-nav nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="jdc-login.html" class="dropdown-toggle" id="jdc-login">您好，请先登录</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="jdc-personal.html">个人中心</a></li>
+                        <li><a href="" id="update-pwd" data-toggle="modal" data-target="#bt-modal">修改密码</a></li>
+                        <li><a href="" id="jdc-user-logout">退出</a></li>
+                    </ul>
+                </li>
+                <li><a href="jdc-index.html" >首页</a></li>
+                <li id="jdc-register"><a href="jdc-register.html" >免费注册</a></li>
+                <li ><a href="jdc-form.html" >我的订单</a></li>
+                <li><a href="jdc-favorite.html" >收藏夹</a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+<!-- 购物车列表 -->
+<div class="container jdc-cart-list" id="jdc-cart-list">
+
+</div>
+
+
+<div id="jdc-cart-handle" class="container hidden" style="margin: 20px auto; text-align: right;">
+    <p style="margin: 0 auto 20px auto; font-size: 30px; color: #C50E1B;">总计：￥<span id="jdc-sum">00.00</span>
+    </p>
+    <button type="button" class="button button-glow button-highlight" id="jdc-cart-clear">清空购物车</button>
+    <button type="button" class="button button-glow button-caution" id="jdc-order">全部下单</button>
+</div>
+
+
+<div class="container">
+    <div class="cut-off hidden-sm hidden-xs"></div>
+</div>
+
+<!--footer-->
+<div class="jdc-footer hidden-sm hidden-xs">
+    <div class="container jdc-footer-inner">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="logo" style="margin-left: 100px;">
+                    <h1>
+                        <a href="jdc-index.html" title="JDC购物商城">JDC购物商城</a>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-center footer-list">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-unstyled ">
+                            <li>
+                                <span class="glyphicon glyphicon-bookmark"></span>
+                                <a href="javascript:;">购物指南</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-leaf"></span>
+                                <a href="javascript:;">常见操作</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <a href="javascript:;">关于我们</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-check"></span>
+                                <a href="javascript:;">JDC保障</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-plane"></span>
+                                <a href="javascript:;">配送方式</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <a href="javascript:;">售后服务</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-jpy"></span>
+                                <a href="javascript:;">支付方式</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-tent"></span>
+                                <a href="javascript:;">商家服务</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-center">JDC公众号</h5>
+                <div class="jdc-QR-code text-center">
+                    <img src="img/jdc-gzh.png" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="cut-off" style="margin-bottom: 2px;"></div>
+</div>
+<div class="container">
+    <h6 class="text-center">免责声明：本站仅供我个人学习参考使用，不具备商业用途。 备注：数据来源 <a href="https://www.jd.com/">京东</a></h6>
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        let username = sessionStorage.getItem('username');
+        if (username == null) {
+            location.href = 'jdc-index.html';
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '/jdc/api/v1/user/userDetails',
+                data: {
+                    username: username
+                },
+                success: function (json) {
+                    if (json.success) {
+                        let showname = json.content.user.showname;
+                        $('#jdc-login').html(showname);
+                        $('#jdc-register').addClass('hidden')
+                        $('#jdc-login').attr('data-toggle', 'dropdown');
+                    }
+                }
+            });
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/jdc/api/v1/cart/list',
+                data: {
+                    username: username
+                },
+                success: function (json) {
+                    if (json.success) {
+                        if (json.content.cartList != null && json.content.cartList.length > 0) {
+
+                            $('#jdc-cart-handle').removeClass('hidden');
+
+                            let sum = 0;
+                            for (let i = 0; i < json.content.cartList.length; i++) {
+                                let cartVo = json.content.cartList[i];
+
+                                sum += cartVo.price * cartVo.cnt;
+
+                                let template =
+                                    `
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <img class="jdc-goods-img" src="${cartVo.url}">
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <h4 class="jdc-goods-title">${cartVo.title}</h4>
+                                                    </div>
+
+                                                    <div class="col-md-2 hidden-xs hidden-sm">
+                                                        <a href="" class="jdc-goods-shop">${cartVo.shop}</a>
+                                                    </div>
+
+                                                    <div class="col-md-1 text-center">
+                                                     <span class="jdc-goods-price">${cartVo.price}</span>
+                                                    </div>
+                                                    <div class="col-md-1 hidden-xs hidden-sm">
+                                                        <span class="jdc-goods-cnt">${cartVo.cnt}</span>
+                                                    </div>
+                                                </div>
+                                    `;
+
+                                $('#jdc-cart-list').append(template);
+
+                            }
+                            // 计算总价
+
+                            $('#jdc-sum').html(sum.toFixed(2));
+
+                            // 绑定清空购物车
+
+                            $('#jdc-cart-clear').click(function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/jdc/api/v1/cart/clear',
+                                    data: {
+                                        username: username
+                                    },
+                                    success: function (json) {
+                                        if (json.success) {
+                                            alert('已清除购物车');
+                                            location.href = 'jdc-cart.html';
+                                            $('#jdc-cart-handle').addClass('hidden');
+                                        }
+                                    }
+                                });
+                            });
+
+                            // 绑定结算
+
+                            $('#jdc-order').click(function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/jdc/api/v1/order/create',
+                                    data: {
+                                        username: username
+                                    },
+                                    success: function (json) {
+                                        if (json.success) {
+                                            alert('下单成功');
+                                            location.href = 'jdc-settlement.html';
+                                        }
+                                    }
+                                });
+                            });
+
+
+                        } else {
+                            emptyCartHandle();
+                        }
+                    } else {
+                        emptyCartHandle();
+                    }
+                }
+            });
+
+        }
+    }
+
+    function emptyCartHandle() {
+        $('#jdc-cart-list').html('<h1 style="text-align: center; padding: 100px 20px">空空如也</h1>');
+    }
+
+    $('#jdc-user-logout').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/jdc/api/v1/user/logout',
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.removeItem('username');
+                    location.href = 'jdc-index.html';
+                }
+            }
+        });
+    });
+
+</script>
+</html>

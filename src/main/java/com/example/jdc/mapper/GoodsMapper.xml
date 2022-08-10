@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdc.mapper.GoodsMapper">
+
+
+    <select id="selectByGid" resultType="com.example.jdc.entity.Goods" parameterType="int">
+        SELECT gid, url, price, title, type, shop FROM tb_goods
+        WHERE gid = #{gid}
+    </select>
+    <select id="selectGoodsByTitleLike" resultType="com.example.jdc.entity.Goods" parameterType="string">
+        SELECT gid, url, price, title, type, shop FROM tb_goods
+        WHERE title LIKE CONCAT('%', #{keyword} ,'%')
+    </select>
+</mapper>

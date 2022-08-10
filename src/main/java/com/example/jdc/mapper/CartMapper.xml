@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdc.mapper.CartMapper">
+    <select id="select" resultType="com.example.jdc.entity.Cart">
+        SELECT cid, uid, gid, cnt, price, opttime FROM tb_cart
+        WHERE uid = #{uid} AND gid = #{gid}
+    </select>
+
+    <insert id="insert" parameterType="com.example.jdc.entity.Cart">
+        INSERT INTO tb_cart(uid, gid, cnt, price, opttime) VALUES
+        (#{uid}, #{gid}, #{cnt}, #{price}, NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE tb_cart SET cnt = cnt + 1, opttime = NOW() WHERE uid = #{uid} AND gid = #{gid}
+    </update>
+
+    <select id="selectByUid" parameterType="int" resultType="com.example.jdc.entity.CartVo">
+        SELECT
+        T1.cid,
+        T1.uid,
+        T1.gid,
+        T1.cnt,
+        T1.price,
+        T1.opttime,
+        T2.title,
+        T2.url,
+        T2.shop,
+        T2.type
+        FROM 	tb_cart  T1
+        JOIN	tb_goods T2
+        ON 	    T1.uid = #{uid}
+        AND	    T1.gid = T2.gid
+    </select>
+
+    <delete id="deleteByUid" parameterType="int">
+        DELETE FROM tb_cart WHERE uid = #{uid}
+    </delete>
+
+</mapper>

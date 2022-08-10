@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JDC-index</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/paginator.min.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        input,
+        button {
+            outline: none !important;
+        }
+
+        .jdc-text {
+            color:#f7f7f7;
+        }
+
+
+        @media (min-width: 768px) {
+            .navbar {
+                min-height: 40px
+            }
+
+            .navbar-nav > li > a {
+                font-size: 12px;
+                font-weight: 700;
+                padding-top: 11px;
+                padding-bottom: 11px
+            }
+
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 42px;
+                height: 42px
+            }
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navbar-nav > li:hover {
+            background: #db6eff;
+        }
+
+        .logo a {
+            display: block;
+            margin-left: -15px;
+            font-size: 0;
+            height: 65px;
+            background: url("img/logo.png") no-repeat;
+        }
+
+        .jdc-search-form {
+            margin: 30px auto 30px auto;
+        }
+
+        .jdc-search-form input,
+        .jdc-search-form button {
+            border-radius: 0 !important;
+        }
+
+        .jdc-search-form .form-control {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .jdc-search-form button {
+            background-color: #ff6700;
+            min-width: 100px;
+        }
+        .jdc-search-form button:hover {
+            background-color: #db6eff;
+            border-color: #db6eff;
+        }
+
+        /*banner*/
+        .jdc-banner {
+            margin-top: 10px;
+        }
+
+        .jdc-nav-aside {
+            background-color: #2f2f2f;
+
+        }
+
+        .jdc-nav-aside li {
+            height: 38px;
+            padding: 0 14px;
+            line-height: 38px;
+        }
+
+        .jdc-nav-aside li a {
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #e7e7e7;
+        }
+
+        .jdc-nav-aside li:hover {
+            background-color: #ff6700;
+        }
+
+        .jdc-nav-aside li:hover a {
+            color: #fff;
+        }
+
+
+    /*商品*/
+        .jdc-homepageCategoryProducts{
+            margin: 25px auto;
+        }
+        .jdc-eachHomepageCategoryProducts{
+            margin-top: 20px;
+            margin-bottom: 15px;
+            height: 50px;
+            width: 130px;
+            line-height: 50px;
+            background-color: #ff7300;
+        }
+
+        .jdc-left-mark {
+            display: inline-block;
+            margin-top: 15px;
+            margin-left: 15px;
+            height: 20px;
+            vertical-align: top;
+            width: 5px;
+            background-color: #db6eff;
+        }
+        .jdc-categoryTitle {
+            font-size: 16px;
+            margin-left: 5px;
+            color: #222222;
+            font-weight: bold;
+        }
+
+        .thumbnail {
+            max-width: 320px;
+            border-radius: 0;
+        }
+
+        .thumbnail .jdc-price {
+            color: #c9302c;
+            font-size: 22px;
+            line-height: 20px;
+            margin: 10px auto;
+        }
+
+        .thumbnail .jdc-title {
+            height: 40px;
+            margin-bottom: 10px;
+            font-size: 13px;
+
+            /* 多行省略 */
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .thumbnail .jdc-shop {
+            height: 20px;
+            color: #646fb0;
+
+            /* 单行省略 */
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .thumbnail .jdc-buy {
+            border-radius: 0 !important;
+        }
+
+
+        .thumbnail:hover {
+            border-color: #db6eff;
+
+        }
+        .cut-off {
+            margin: 60px auto 30px;
+            height: 1px;
+            background-color: #333;
+        }
+
+        .footer-list ul>li {
+            margin-top: 15px;
+        }
+        .jdc-QR-code img{
+            height: 100px;
+            width: 100px;
+        }
+
+
+    </style>
+</head>
+<body>
+<!--导航条-->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="jdc-index.html" class="navbar-brand">
+                <span class="glyphicon glyphicon-home jdc-text"></span>
+                <span class="jdc-text">JDC购物商城</span>
+            </a>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#jdc-nav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="jdc-nav">
+
+            <ul class="navbar-nav nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="jdc-login.html" class="dropdown-toggle" id="jdc-login">您好，请先登录</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="jdc-personal.html">个人中心</a></li>
+                        <li><a href="" id="update-pwd" data-toggle="modal" data-target="#bt-modal">修改密码</a></li>
+                        <li><a href="" id="jdc-user-logout">退出</a></li>
+                    </ul>
+                </li>
+                <li id="jdc-register"><a href="jdc-register.html" >免费注册</a></li>
+                <li ><a href="jdc-form.html" >我的订单</a></li>
+                <li><a href="jdc-cart.html" >购物车</a></li>
+                <li><a href="jdc-favorite.html" >收藏夹</a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<!--search-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-md-offset-1  hidden-xs hidden-sm">
+            <div class="logo">
+                <h1>
+                    <a href="jdc-index.html" title="JDC购物商城">JDC购物商城</a>
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-md-offset-1">
+
+            <form action="" method="" class="jdc-search-form">
+                <div class="form-group form-group-lg">
+                    <div class="input-group">
+                        <input type="text" name="keyword" id="keyword" class="form-control"
+                               placeholder="Go Shopping"/>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-lg jdc-btn" id="jdc-search-btn">
+                                <span class="glyphicon glyphicon-search" style="vertical-align: -3px; color: #e7e7e7;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="container jdc-banner" id="jdc-banner" >
+    <div class="row">
+        <div class="col-md-3 hidden-xs hidden-sm">
+            <ul class="list-unstyled jdc-nav-aside">
+                <li><a href="">大家电 / 生活电器</a></li>
+                <li><a href="">男装 / 运动户外</a></li>
+                <li><a href="">女装 / 内衣</a></li>
+                <li><a href="">眼镜 / 珠宝</a></li>
+                <li><a href="">美妆 / 个人护理</a></li>
+                <li><a href="">手机 / 数码 / 电脑办公</a></li>
+                <li><a href="">玩具 / 魔方 / 溜溜球</a></li>
+                <li><a href="">零食 / 茶酒 / 进口食品</a></li>
+                <li><a href="">生鲜 / 水果 / 蔬菜</a></li>
+                <li><a href="">厨具 / 收纳 / 宠物</a></li>
+                <li><a href="">图书 / 文娱 / 教育</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div id="carousel-exampjdc-generic" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-exampjdc-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-exampjdc-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-exampjdc-generic" data-slide-to="2"></li>
+                </ol>
+
+                <!-- 轮播图 -->
+                <div class="carousel-inner">
+                    <div class="item active " >
+                        <img style="height: 415px; width: 100%;"
+                             src="../view/img/q1.jpg">
+                    </div>
+                    <div class="item" >
+                        <img style="height: 415px; width: 100%;"
+                             src="../view/img/q2.jpg">
+                    </div>
+                    <div class="item">
+                        <img style="height: 415px; width: 100%;"
+                             src="../view/img/q3.jpg">
+                    </div>
+
+                </div>
+
+                <a class="left carousel-control" href="#carousel-exampjdc-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-exampjdc-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container hidden" id="jdc-search-title">
+    <div class="jdc-eachHomepageCategoryProducts">
+        <div class="jdc-left-mark"></div>
+        <span class="jdc-categoryTitle">查询商品：</span>
+    </div>
+</div>
+<div class="container">
+    <div class="row" id="jdc-search-result">
+
+    </div>
+</div>
+
+<div class="container text-center">
+    <ul class="pagination hidden" id="pagination">
+    </ul>
+</div>
+
+
+
+<!--商品-->
+<div class="container jdc-homepageCategoryProducts" id="jdc-homepageCategoryProducts">
+    <div class="jdc-eachHomepageCategoryProducts">
+        <div class="jdc-left-mark"></div>
+        <span class="jdc-categoryTitle">电视 / 相机</span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3 ">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img10.360buyimg.com/n7/jfs/t1/8371/16/16260/101202/627397b2E86827dae/2df33c28bf5987b2.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥2058.00</h5>
+                    <p class="jdc-title">SONY 索尼 DSC-H300 长焦数码相机黑色 家用旅游照相机2010万像素 35倍光学变焦 官方标配</p>
+                    <p class="jdc-shop">索尼（SONY）数码相机旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img11.360buyimg.com/n7/jfs/t1/23440/14/16509/335458/6292058eEf6f87ae7/9f4051a69c816655.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥3399.00</h5>
+                    <p class="jdc-title">华为智慧屏 S 65英寸 120Hz超薄全面屏 3GB+16GB 鸿蒙HarmonyOS 4K超高清MEMC液晶游戏电视机 HD65KANA</p>
+                    <p class="jdc-shop">华为京东自营官方旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img12.360buyimg.com/n7/jfs/t1/211052/1/22340/125780/628b8badE3dbd8d62/d2cf661eb94edb1b.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥2399.00</h5>
+                    <p class="jdc-title">小米电视EA70 2022款 70英寸 金属全面屏 远场语音 逐台校准4K超高清智能电视机L70M7-EA</p>
+                    <p class="jdc-shop">小米官方旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img11.360buyimg.com/n7/jfs/t1/100815/16/27391/189254/62903083Ee96ad509/0f47af3e21fd78e3.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥5288.00</h5>
+                    <p class="jdc-title">佳能（Canon） EOS 200D二代 200d2代单反相机入门vlog迷你单反数码照相机 白色18-55mmSTM套机</p>
+                    <p class="jdc-shop">佳能（Canon）数码专卖店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+    <div class="jdc-eachHomepageCategoryProducts">
+        <div class="jdc-left-mark"></div>
+        <span class="jdc-categoryTitle">衣服 / 美装</span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img11.360buyimg.com/n7/jfs/t1/185261/2/824/297388/608516f6E31da8abc/9fc3b3e586837150.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥59.00</h5>
+                    <p class="jdc-title">东方狮啸 短袖t恤男士夏季港风宽松五分袖男韩版潮流时尚半袖上衣服青少年运动汗衫薄款体恤半截袖男装夏装</p>
+                    <p class="jdc-shop">东方狮啸官方旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img14.360buyimg.com/n7/jfs/t1/128463/31/27513/192150/6260ef18E8a20bab3/31ed12dbb8cc4ecd.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥69.00</h5>
+                    <p class="jdc-title">格逻依 短袖t恤女2022夏季新款韩版宽松大码学生拼接印花中长款遮臀半袖上衣服女</p>
+                    <p class="jdc-shop">格逻依旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img12.360buyimg.com/n7/jfs/t1/136920/18/28930/137195/6290ad44E8f6fe602/9bc31396595c874b.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥329.00</h5>
+                    <p class="jdc-title">迪奥Dior口红全新烈艳蓝金唇膏女哑光999#3.5g(传奇正红 生日礼物送女友 女生 送老婆 送朋友 ）</p>
+                    <p class="jdc-shop">迪奥（Dior）美妆京东自营专区</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img11.360buyimg.com/n7/jfs/t1/199570/28/24187/333689/6290a0e3E5925d0ac/2cb54af3ea6d125a.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥132.00</h5>
+                    <p class="jdc-title">nyx眼影16色眼影盘大地色彩妆盘哑光珠光闪粉高光日常美妆眼妆眼影盒暖色盘#03生日节日礼物送女友13.28g/盘</p>
+                    <p class="jdc-shop">NYX海外京东自营旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="jdc-eachHomepageCategoryProducts">
+        <div class="jdc-left-mark"></div>
+        <span class="jdc-categoryTitle">手机 / 电脑</span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img10.360buyimg.com/n7/jfs/t1/134784/35/23156/97133/6212fc17E780035a3/0dd82913e51e4d8f.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥5898.00</h5>
+                    <p class="jdc-title">Apple iPhone 13 (A2634) 128GB 星光色 支持移动联通电信5G 双卡双待手机【快充套装】</p>
+                    <p class="jdc-shop">Apple产品京东自营旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img11.360buyimg.com/n7/jfs/t1/23211/22/16489/194909/628cd2eeE193d2068/d11c2406207fa8f1.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥1799.00</h5>
+                    <p class="jdc-title">Redmi Note11T Pro 5G 天玑8100 144HzLCD旗舰直屏 67W快充 6GB+128GB子夜黑 5G智能手机 小米红米</p>
+                    <p class="jdc-shop">小米京东自营旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img12.360buyimg.com/n7/jfs/t1/198316/20/24139/198533/628b0d5dE97ab00be/3d61d96fe0c0d1c5.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥4988.00</h5>
+                    <p class="jdc-title">华为手机</p>
+                    <p class="jdc-shop">华为京东自营官方旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail center-block">
+                <img
+                        src="https://img14.360buyimg.com/n7/jfs/t1/179817/17/24984/202151/628a5efbEf7c2c3fb/27f1a2816f5c7f2a.jpg">
+                <div class="caption">
+                    <h5 class="jdc-price">￥8999.00</h5>
+                    <p class="jdc-title">联想拯救者Y9000P 2022 英特尔酷睿i7 16英寸游戏笔记本电脑(12代i7-12700H 16G 512G RTX3060 2.5k 电竞屏)</p>
+                    <p class="jdc-shop">联想京东自营旗舰店</p>
+                    <button type="button" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="cut-off hidden-sm hidden-xs"></div>
+</div>
+
+<!--footer-->
+<div class="jdc-footer hidden-sm hidden-xs">
+    <div class="container jdc-footer-inner">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="logo" style="margin-left: 100px;">
+                    <h1>
+                        <a href="jdc-index.html" title="JDC购物商城">JDC购物商城</a>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-center footer-list">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-unstyled ">
+                            <li>
+                                <span class="glyphicon glyphicon-bookmark"></span>
+                                <a href="javascript:;">购物指南</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-leaf"></span>
+                                <a href="javascript:;">常见操作</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <a href="javascript:;">关于我们</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-check"></span>
+                                <a href="javascript:;">JDC保障</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-plane"></span>
+                                <a href="javascript:;">配送方式</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <a href="javascript:;">售后服务</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="glyphicon glyphicon-jpy"></span>
+                                <a href="javascript:;">支付方式</a>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-tent"></span>
+                                <a href="javascript:;">商家服务</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-center">JDC公众号</h5>
+                <div class="jdc-QR-code text-center">
+                    <img src="img/jdc-gzh.png" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="cut-off" style="margin-bottom: 2px;"></div>
+</div>
+<div class="container">
+    <h6 class="text-center">免责声明：本站仅供我个人学习参考使用，不具备商业用途。 备注：数据来源 <a href="https://www.jd.com/">京东</a></h6>
+</div>
+<!--修改密码-->
+<div class="container">
+    <div class="modal fade" id="bt-modal">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="jdc-text">修改个人密码</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form action="" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">旧密码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="oldPassword" name="oldPassword">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">新密码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="newPassword" name="newPassword">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-danger jdc-btn" id="jdc-user-update-password">确定
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="application/javascript">
+    $("#header").load('header.html');
+    $(document).ready(function () {
+        // 判断是否登录 已登录 显示昵称
+        let username = sessionStorage.getItem('username');
+        if (username) {
+            $.ajax({
+                type: 'GET',
+                url: '/jdc/api/v1/user/userDetails',
+                data: {
+                    username: username
+                },
+                success: function (json) {
+                    if (json.success) {
+                        let showname = json.content.user.showname;
+                        $('#jdc-login').html(showname);
+                        $('#jdc-register').addClass('hidden')
+                        $('#jdc-login').attr('data-toggle', 'dropdown');
+                    }
+                }
+            });
+        }
+    });
+
+    $('#jdc-user-logout').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/jdc/api/v1/user/logout',
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.removeItem('username');
+                    location.href = 'jdc-index.html';
+                }
+            }
+        });
+    });
+
+    $('#jdc-user-update-password').click(function () {
+        let username = sessionStorage.getItem('username');
+        $.ajax({
+            type: 'POST',
+            url: '/jdc/api/v1/user/updatePassword',
+            data: {
+                username: username,
+                oldPassword: $('#oldPassword').val(),
+                newPassword: $('#newPassword').val()
+            },
+            success: function (json) {
+                if (json.success) {
+                    sessionStorage.removeItem('username');
+                    location.href = 'jdc-update-pwd-redirect.html';
+                } else {
+                    alert('输入错误，请重新输入...');
+                }
+            }
+        });
+    });
+
+    $('#jdc-search-btn').click(function () {
+        let keyword = $('#keyword').val();
+        if (keyword == null || '' == keyword) {
+            alert('请输入内容...');
+        } else {
+            // 请求服务器
+            getGoodsList(1, 12, keyword);
+        }
+    });
+
+    function callPaginator(currentPage, pages, callback) {
+        $('#pagination').bootstrapPaginator({
+            bootstrapMajorVersion: 3,
+            size: "normal",
+            alignment: "center",
+            currentPage: currentPage,
+            totalPages: pages,
+            numberOfPages: 5,
+
+            // 点击页码回调函数
+            onPageClicked: function (event, originalE, type, page) {
+                callback(page, 12, $('#keyword').val());
+                $(window).scrollTop(0);
+            },
+
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case 'first':
+                        return "首页";
+                    case 'prev':
+                        return "上一页";
+                    case 'next':
+                        return "下一页";
+                    case 'last':
+                        return "末页";
+                    case 'page':
+                        return page;
+                }
+            }
+        });
+    }
+
+    function getGoodsList(page, size, keyword) {
+
+        $.ajax({
+            type: 'GET',
+            url: '/jdc/api/v1/anonymous/goodsList',
+            data: {
+                page: page,
+                size: size,
+                keyword: keyword
+            },
+            success: function (json) {
+                if (json.success) {
+                    if (json.content.pages > 0) {
+                        // 请求服务器成功并且拿到数据
+                        $('#jdc-banner').addClass('hidden');
+                        $('#jdc-homepageCategoryProducts').addClass('hidden')
+                        $('#jdc-search-title').removeClass('hidden');
+                        // 搜索内容置空
+                        $('#jdc-search-result').empty();
+                        // #jdc-search-result
+
+                        let username = sessionStorage.getItem('username');
+                        let flag = (username != null);
+
+                        for (let i = 0; i < json.content.goodsList.length; i++) {
+                            let goods = json.content.goodsList[i];
+                            let url = '';
+                            if (flag) {
+                                url = 'jdc-details.html?username=' + username + '&gid=' + goods.gid;
+                            } else {
+                                url = 'jdc-details.html?gid=' + goods.gid;
+                            }
+                            let template =
+                                `
+                                    <div class="col-sm-6 col-md-4 col-lg-3 ">
+            <div class="thumbnail center-block">
+                <img
+                        src="${goods.url}">
+                <div class="caption">
+                    <h5 class="jdc-price">￥${goods.price}</h5>
+                    <p class="jdc-title">${goods.title}</p>
+                    <p class="jdc-shop">${goods.shop}</p>
+                    <a href="${url}" class="btn btn-danger btn-xs jdc-btn jdc-buy">立即抢购</a>
+                </div>
+            </div>
+        </div>
+                                `;
+                            $('#jdc-search-result').append(template);
+                        }
+
+                        // 显示分页按钮
+                        $('#pagination').removeClass('hidden');
+
+                        // 调用分页按钮
+                        callPaginator(page, json.content.pages, getGoodsList);
+
+                    } else {
+                        alert('没有相关结果...');
+                    }
+                } else {
+                    alert('没有相关结果...');
+                }
+            }
+        });
+    }
+</script>
+</html>

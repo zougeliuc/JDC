@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdc.mapper.UserMapper">
+
+    <!--rbac模型-->
+
+    <resultMap id="baseUser" type="com.example.jdc.entity.User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    <resultMap id="userAndRole" type="com.example.jdc.entity.User" extends="baseUser">
+        <collection
+                property="roles"
+                javaType="list"
+                ofType="com.example.jdc.entity.Role"
+                column="uid"
+                select="selectRolesByUid"/>
+    </resultMap>
+
+    <select id="selectByUsername" resultMap="userAndRole" parameterType="string">
+        select uid,username,password
+        from tb_user
+        where username = #{username}
+    </select>
+    
+    
+    <resultMap id="baseRole" type="com.example.jdc.entity.Role">
+        <id property="rid" column="rid"/>
+        <result property="rname" column="rname"/>
+    </resultMap>
+    <resultMap id="roleAndPermission" type="com.example.jdc.entity.Role" extends="baseRole">
+        <collection
+                property="permissions"
+                javaType="list"
+                ofType="com.example.jdc.entity.Permission"
+                column="rid"
+                select="selectPermissionByRid"/>
+    </resultMap>
+    <select id="selectRolesByUid" resultMap="roleAndPermission" parameterType="int">
+        select
+        t2.rid,t2.rname
+        from tb_user_role t1
+        join tb_role t2
+        on t1.rid = t2.rid
+        and t1.uid = #{uid}
+    </select>
+
+
+    <resultMap id="basePermission" type="com.example.jdc.entity.Permission">
+        <id property="pid" column="pid"/>
+        <result property="pname" column="pname"/>
+    </resultMap>
+    <select id="selectPermissionByRid" resultMap="basePermission" parameterType="int">
+        select t2.pid, t2.pname
+        from tb_role_permission t1
+        join tb_permission t2
+        on t1.pid = t2.pid
+        and t1.rid = #{rid}
+    </select>
+
+
+    <insert id="add" parameterType="com.example.jdc.entity.User">
+        INSERT INTO tb_user
+        (username, password, phone, showname, regtime)
+        VALUES
+        (#{username}, #{password}, #{phone}, #{showname}, #{regtime})
+    </insert>
+
+    <select id="selectUserDetailsByUsername" resultMap="userAndRole">
+        SELECT
+        uid,
+        username,
+        phone,
+        sex,
+        info,
+        address,
+        showname,
+        email,
+        regtime
+        FROM    tb_user
+        WHERE   username = #{username}
+    </select>
+
+    <update id="updateUserDetailsByUsername">
+        UPDATE tb_user
+        <set>
+            <if test="showname != null">showname = #{showname},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="info != null">info = #{info}</if>
+        </set>
+        WHERE username = #{username}
+    </update>
+    <update id="updatePasswordByUsername">
+        UPDATE tb_user SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
+</mapper>
