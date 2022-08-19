@@ -9,7 +9,7 @@ public final class JsonHelper {
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    /*java8 数据类型 规范*/
+    /*java8 日期时间数据类型 规范*/
     static {
         OBJECT_MAPPER
                 .registerModule(new ParameterNamesModule())

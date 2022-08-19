@@ -14,8 +14,8 @@ public class BcryptHelper {
         //检查密码是否为空
         Objects.requireNonNull(password,"password must not be null");
         //生成随机盐
-        String gensalt = BCrypt.gensalt();
-        return BCrypt.hashpw(password,gensalt);
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(password,salt);
     }
 
     public static boolean verify(String password,String encrypt) {
